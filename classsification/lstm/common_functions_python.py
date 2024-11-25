@@ -35,6 +35,14 @@ from PIL import Image
 from time import gmtime, strftime
 import matplotlib.pyplot as plt
 import torch
+from torch.nn.utils.rnn import pack_padded_sequence, pad_sequence
+
+import warnings
+import torch
+
+# Suppress the specific UserWarning
+warnings.filterwarnings("ignore", category=UserWarning, message=".*copy constructor.*")
+warnings.filterwarnings("ignore", category=UserWarning)
 
 config_file = {}
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -50,6 +58,8 @@ def test_function():
 
 
 dataset_table = {
+                'dino_left_large_train': '/media/osero/SamsungSSD/pickles/features_left_hand_frames_large_train.pickle',
+                'dino_left_large_test': '/media/osero/SamsungSSD/pickles/features_left_hand_frames_large_test.pickle',
                 'dino_left_small_train': '/media/osero/SamsungSSD/pickles/features_left_hand_frames_small_train.pickle',
                 'dino_left_small_test': '/media/osero/SamsungSSD/pickles/features_left_hand_frames_small_test.pickle',
                 'dino_right_small_train': '/media/osero/SamsungSSD/pickles/features_right_hand_frames_small_train.pickle',
@@ -153,7 +163,22 @@ class CustomImageDataset(Dataset):
         concatenate_embeddings = np.concatenate(embeddings_list, axis=1)
         np_stacked_array = np.stack(concatenate_embeddings)
         tensor = torch.from_numpy(np_stacked_array)
-        return tensor, self.labels[idx] 
+        return tensor, len(np_stacked_array), self.labels[idx] 
+
+# Step 2: Collate function
+def collate_fn(batch):
+    sequences, lengths, labels = zip(*batch)
+    lengths = torch.tensor(lengths)
+    labels = torch.tensor(labels)
+
+    # Pad sequences to the maximum length in the batch
+    padded_sequences = pad_sequence([torch.tensor(seq) for seq in sequences], batch_first=True)
+
+    # Sort by lengths in descending order
+    sorted_lengths, sorted_indices = lengths.sort(descending=True)
+    sorted_sequences = padded_sequences[sorted_indices]
+    sorted_labels = labels[sorted_indices]
+    return sorted_sequences, sorted_lengths, sorted_labels
 
 def create_data_loaders(datasets):        
     train_file_names = []
@@ -163,8 +188,8 @@ def create_data_loaders(datasets):
         test_file_names.append(dataset_table[dataset_name + '_test'])
     train_dataset = CustomImageDataset(train_file_names)
     test_dataset = CustomImageDataset(test_file_names)
-    train_loader = DataLoader(train_dataset, batch_size=config_file['batch_size'], shuffle=True)  # Adjust batch size as needed
-    test_loader = DataLoader(test_dataset, batch_size=config_file['batch_size'], shuffle=True)
+    train_loader = DataLoader(train_dataset, batch_size=config_file['batch_size'], shuffle=True, collate_fn=collate_fn, num_workers=config_file['num_workers'])  # Adjust batch size as needed
+    test_loader = DataLoader(test_dataset, batch_size=config_file['batch_size'], shuffle=True, collate_fn=collate_fn, num_workers=config_file['num_workers'])
     return train_loader, test_loader
 
 class VideoClassifierLSTM(nn.Module):
@@ -198,8 +223,10 @@ def test_model(test_loader, model, criterion):
     test_labels = []
 
     with torch.no_grad():
-        for features, labels in test_loader:
-            features = features.to(device)
+        for features, lengths, labels in test_loader:
+            packed_input = pack_padded_sequence(features, lengths, batch_first=True, enforce_sorted=True)
+            features = packed_input.to(device)
+            lengths = lengths.to(device)
             labels = labels.to(device)
 
             # calculate outputs by running images through the network
@@ -210,8 +237,8 @@ def test_model(test_loader, model, criterion):
             _, predicted = torch.topk(outputs.data, 1)
             _, predicted_top_5 = torch.topk(outputs.data, 5)
             total += labels.size(0)
-            correct += (predicted.to(device) == labels).sum().item() 
-            top_5_correct += (predicted_top_5.to(device) == labels).any().sum().item()
+            correct += (predicted.to(device) == labels).sum().item()
+            top_5_correct += sum([(predicted_top_5[i] == labels[i]).any().item() for i in range(len(labels))])
             running_loss += loss.item()
 
             test_labels += (labels.cpu().numpy().tolist())
@@ -228,7 +255,7 @@ def get_current_time():
 
 def save_model_result(model, current_time, input_dim, num_classes, avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list):
     ## Store as torch
-    result_name = f'lstm_results/{config_file["name"]}{current_time}.pth'
+    result_name = f'lstm_results/{config_file["name"]}_{current_time}.pth'
     data = {'result_name': result_name,
                 'model_state_dict': model.state_dict(),
                 'config_file': config_file,
@@ -250,7 +277,7 @@ def save_model_result(model, current_time, input_dim, num_classes, avg_accuracy_
         if (len(rows) == 0):
             print('len(rows): ', len(rows))
             csv_header = list(config_file.keys())
-            csv_header.extend(['train_loss', 'test_loss', 'train_acc', 'test_acc', 'top5_test_acc'])
+            csv_header.extend(['train_loss', 'test_loss', 'train_acc', 'test_acc', 'top5_test_acc', 'best_epoch', 'current_time'])
 
     with open(csv_file_path, mode='a', newline='') as file:
         writer = csv.writer(file)
@@ -260,7 +287,7 @@ def save_model_result(model, current_time, input_dim, num_classes, avg_accuracy_
         max_index = avg_test_accuracy_list.index(max(avg_test_accuracy_list))
         csv_data = list(config_file.values())
         csv_data.extend([f"{avg_loss_list[max_index]:.2f}", f"{avg_test_loss_list[max_index]:.2f}", f"{avg_accuracy_list[max_index]:.2f}",
-                          f"{avg_test_accuracy_list[max_index]:.2f}", f"{avg_top5_test_accuracy_list[max_index]:.2f}"])
+                          f"{avg_test_accuracy_list[max_index]:.2f}", f"{avg_top5_test_accuracy_list[max_index]:.2f}", max_index, current_time])
         writer.writerow(csv_data)
 
 
