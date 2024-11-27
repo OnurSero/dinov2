@@ -60,6 +60,8 @@ def test_function():
 dataset_table = {
                 'dino_left_large_train': '/media/osero/SamsungSSD/pickles/features_left_hand_frames_large_train.pickle',
                 'dino_left_large_test': '/media/osero/SamsungSSD/pickles/features_left_hand_frames_large_test.pickle',
+                'dino_right_large_train': '/media/osero/SamsungSSD/pickles/features_right_hand_frames_large_train.pickle',
+                'dino_right_large_test': '/media/osero/SamsungSSD/pickles/features_right_hand_frames_large_test.pickle',
                 'dino_left_small_train': '/media/osero/SamsungSSD/pickles/features_left_hand_frames_small_train.pickle',
                 'dino_left_small_test': '/media/osero/SamsungSSD/pickles/features_left_hand_frames_small_test.pickle',
                 'dino_right_small_train': '/media/osero/SamsungSSD/pickles/features_right_hand_frames_small_train.pickle',
