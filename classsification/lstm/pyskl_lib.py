@@ -728,6 +728,10 @@ def combine_heatmaps(heatmaps):
     heatmaps = [np.max(x, axis=-1) for x in heatmaps]
     return heatmaps
 
+def combine_heatmaps_list(heatmaps):
+    heatmaps = [np.max(x, axis=0) for x in heatmaps]
+    return heatmaps
+
 def vis_heatmaps(heatmaps, ratio=8):
     # if channel is -1, draw all keypoints / limbs on the same map
     import matplotlib.cm as cm
