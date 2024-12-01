@@ -155,6 +155,7 @@ def train_loop_dino():
 
     input_dim = train_loader.dataset[0][0][0].size(0)  # Get input dimension from a single feature from a video
     num_classes = len(set(train_loader.dataset.classes))
+    print("datasets: ", config_file['datasets'])
     print("input_dim: ", input_dim, " num_classes: ", num_classes)
     print("train_dataset size: ", len(train_loader.dataset))
     print("test_dataset size: ", len(test_loader.dataset))
