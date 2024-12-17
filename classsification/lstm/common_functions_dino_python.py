@@ -30,6 +30,7 @@ class CustomImageDinoDataset(Dataset):
         self.classes = np.unique(labels_list[0])
         label_dict = create_label_dict(self.classes)
 
+        self.pickle_file_name_list = pickle_file_name_list
         self.features_list = features_list
         self.labels = [label_dict[x] for x in labels_list[0]]
         self.labels = [label_dict[x] for x in labels_list[0]]
@@ -136,18 +137,29 @@ def test_model_dino(test_loader, model, criterion):
             # the class with the highest energy is what we choose as prediction
             _, predicted = torch.topk(outputs.data, 1)
             _, predicted_top_5 = torch.topk(outputs.data, 5)
-            total += labels.size(0)
-            correct += (predicted.to(device) == labels).sum().item()
-            top_5_correct += sum([(predicted_top_5[i] == labels[i]).any().item() for i in range(len(labels))])
+            running_total = len(labels)
+            running_correct = (predicted.flatten() == labels.flatten()).sum().item()
+            # running_correct2 = sum([(predicted[i] == labels[i]).any().item() for i in range(len(labels))])
+            running_top_5_correct = sum([(predicted_top_5[i] == labels[i]).any().item() for i in range(len(labels))])
             running_loss += loss.item()
+
+            total += running_total
+            correct += running_correct
+            top_5_correct += running_top_5_correct
+
+            # print(torch.tensor(predicted).flatten().tolist())
+            # print(labels.tolist())
+            # print(predicted_top_5)
+            # print(f'running_total: {running_total}, running_correct: {running_correct}, running_correct2: {running_correct2}, running_top_5_correct: {running_top_5_correct}')
+            # print(f'total: {total}, correct: {correct}, top_5_correct: {top_5_correct}, running_loss: {running_loss}')
 
             test_labels += (labels.cpu().numpy().tolist())
             test_predicted += (predicted.cpu().numpy().tolist())
 
-    avg_loss = running_loss / total
-    accuracy = 100 * correct / total
-    top_5_accuracy = 100 * top_5_correct / total
-    print(f'Accuracy of the network on the {len(test_loader.dataset)} test video: {accuracy:.4f} %, top5: {top_5_accuracy:.4f} %, avg_loss: {avg_loss}')
+    avg_loss = running_loss / len(test_loader.dataset)
+    accuracy = (100.0 * correct) / len(test_loader.dataset)
+    top_5_accuracy = (100.0 * top_5_correct) / len(test_loader.dataset)
+    print(f'Accuracy of the network on the {len(test_loader.dataset)} test video: {accuracy:.4f} %, top5: {top_5_accuracy:.4f} %, avg_loss: {avg_loss}, total: {total}')
     return accuracy, top_5_accuracy, avg_loss
 
 def train_loop_dino():
@@ -159,14 +171,16 @@ def train_loop_dino():
     print("input_dim: ", input_dim, " num_classes: ", num_classes)
     print("train_dataset size: ", len(train_loader.dataset))
     print("test_dataset size: ", len(test_loader.dataset))
+    print('train_loader pickle_file_name_list: ', train_loader.dataset.pickle_file_name_list)
+    print('test_loader pickle_file_name_list: ', test_loader.dataset.pickle_file_name_list)
 
     model = create_dino_model(input_dim, num_classes)
 
     criterion, optimizer, scheduler = create_train_dependencies(model)
 
-    print(f"lr {config_file['lr']}, step_size: {config_file['step_size']}, gamma: {config_file['gamma']}, weight_decay: {config_file['weight_decay']}")
-    print(f"Model hidden_dim {config_file['hidden_dim']}, num_layers: {config_file['num_layers']}")
-    print(f"batch_size {config_file['batch_size']}, frame_frequency: {config_file['frame_frequency']}")
+    # print(f"lr {config_file['lr']}, step_size: {config_file['step_size']}, gamma: {config_file['gamma']}, weight_decay: {config_file['weight_decay']}")
+    # print(f"Model hidden_dim {config_file['hidden_dim']}, num_layers: {config_file['num_layers']}, bidirectional_lstm: {config_file['bidirectional_lstm']}")
+    # print(f"batch_size {config_file['batch_size']}, frame_frequency: {config_file['frame_frequency']}")
 
     avg_loss_list = []
     avg_accuracy_list = []

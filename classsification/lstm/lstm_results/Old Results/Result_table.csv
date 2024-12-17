@@ -1,0 +1,211 @@
+name,datasets,bidirectional_lstm,lstm_dropout,mlp_dropout,lr,step_size,gamma,weight_decay,hidden_dim,num_layers,batch_size,frame_frequency,num_epoch,num_workers,train_loss,test_loss,train_acc,test_acc,top5_test_acc,best_epoch,Time
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,1,25,5,0.1,0.01,98.79,87.69,96.15,24,
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,1,20,4,0.16,0.01,97.64,88,95.8,15,
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,20,4,0.09,0.01,98.85,91.45,96.79,18,
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,20,4,0.11,0.01,98.47,91.42,96.88,15,
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,4,20,4,0.2,0.01,97.15,90.32,96.84,10,
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,4,20,4,0.17,0.01,97.6,89.77,97.08,11,
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,1,20,4,0.2,0.01,96.92,85.63,94.94,17,
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,1,20,4,0.2,0.01,97.01,84.04,94.21,18,
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,2,20,4,0.14,0.01,97.86,88.79,96.42,17,
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,2,20,4,0.14,0.01,98.04,89.08,96.77,16,
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,4,20,4,0.14,0.01,98.03,89.08,96.82,19,
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,4,20,4,0.16,0.01,97.78,88.02,96.26,17,
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,1,20,4,0.28,0.02,95.33,81.83,93.79,18,
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,1,20,4,0.31,0.02,94.78,84.24,94.63,15,
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,2,20,4,0.18,0.01,97.19,88.93,96.35,18,
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,2,20,4,0.19,0.01,97.1,87.62,95.69,19,
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,4,20,4,0.21,0.01,96.75,88.02,96.82,19,
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,4,20,4,0.21,0.01,96.66,87.09,96.07,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,1,20,4,0.26,0.02,96,81.9,93.48,15,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,1,20,4,0.22,0.02,96.94,82.56,93.83,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,20,4,0.13,0.01,98.47,87.93,96.04,18,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,20,4,0.14,0.01,98.05,86.16,95.34,17,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,4,20,4,0.15,0.01,98.27,87.53,96.18,16,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,4,20,4,0.16,0.01,98.07,86.56,96.09,15,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,1,20,4,0.31,0.02,95.18,80.17,93.44,17,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,1,20,4,0.39,0.02,93.2,78.85,92.4,14,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,2,20,4,0.22,0.01,96.51,83.78,94.78,15,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,2,20,4,0.2,0.01,97.04,88.2,95.93,17,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,4,20,4,0.45,0.02,92.04,84.97,95.56,9,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,4,20,4,0.25,0.01,96.48,84.04,95.11,15,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,1,20,4,0.4,0.02,92.93,78.96,93.1,18,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,1,20,4,0.43,0.02,92.18,76.97,92.66,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,2,20,4,0.28,0.02,95.63,83.8,94.61,17,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,2,20,4,0.29,0.02,95.44,83.29,94.65,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,4,20,4,0.34,0.02,94.53,82.18,94.63,18,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,4,20,4,0.34,0.02,94.39,81.06,93.63,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,1,20,4,0.53,0.02,92,80.59,93.44,18,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,1,20,4,0.38,0.02,94.78,80.92,93.44,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,20,4,0.33,0.01,95.14,87.4,95.87,13,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,20,4,0.3,0.01,95.54,86.65,95.69,13,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,4,20,4,0.28,0.01,96.23,88.95,96.84,13,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,4,20,4,0.18,0.01,97.79,89.74,96.71,18,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,1,20,4,0.7,0.02,88.14,76.59,91.89,18,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,1,20,4,0.78,0.02,87.11,74.18,90.85,18,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,2,20,4,0.34,0.02,95.08,83.66,94.23,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,2,20,4,0.38,0.02,94.55,83.84,94.19,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,4,20,4,0.27,0.01,96.04,87.2,96.11,18,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,4,20,4,0.32,0.01,95.58,86.34,96.11,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,1,20,4,1.37,0.03,71.55,62.89,83.91,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,1,20,4,1.4,0.03,71.65,65.76,85.48,17,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,2,20,4,0.59,0.02,90.71,80.31,93.32,18,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,2,20,4,0.62,0.02,89.9,77.79,93.46,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,4,20,4,0.45,0.02,93.01,82.65,94.45,19,
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,4,20,4,0.55,0.02,91.24,82.38,94.69,19,
+DINO_features,"['deephand_left', 'dino_left_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,1,20,4,0.21,0.01,96.9,86.41,94.92,13,
+DINO_features,"['deephand_left', 'dino_left_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,1,20,4,0.13,0.01,98.45,87.42,95.62,17,
+DINO_features,"['deephand_left', 'dino_left_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,20,4,0.13,0.01,98.2,89.61,96.44,13,
+DINO_features,"['deephand_left', 'dino_left_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,20,4,0.1,0.01,98.79,90.32,96.75,15,
+DINO_features,"['deephand_left', 'dino_left_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,4,20,4,0.1,0.01,99.11,88.59,96.51,19,
+DINO_features,"['deephand_left', 'dino_left_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,4,20,4,0.1,0.01,98.99,89.5,96.26,19,
+DINO_features,"['deephand_left', 'dino_left_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,1,20,4,0.17,0.01,97.73,86.52,94.39,19,
+DINO_features,"['deephand_left', 'dino_left_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,1,20,4,0.16,0.01,97.82,85.65,94.96,19,
+DINO_features,"['deephand_left', 'dino_left_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,2,20,4,0.15,0.01,97.8,88.46,96.11,15,
+DINO_features,"['deephand_left', 'dino_left_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,2,20,4,0.14,0.01,98.34,88.73,96.35,17,
+DINO_features,"['deephand_left', 'dino_left_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,4,20,4,0.15,0.01,98.24,87.6,96.2,18,
+DINO_features,"['deephand_left', 'dino_left_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,4,20,4,0.15,0.01,98.09,88.09,96.09,18,
+DINO_features,"['deephand_left', 'dino_left_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,1,20,4,0.25,0.02,96.17,82.4,94.23,19,
+DINO_features,"['deephand_left', 'dino_left_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,1,20,4,0.24,0.02,96.06,83.89,93.94,17,
+DINO_features,"['deephand_left', 'dino_left_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,2,20,4,0.18,0.01,97.47,86.16,95.49,19,
+DINO_features,"['deephand_left', 'dino_left_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,2,20,4,0.17,0.01,97.22,88.17,95.91,17,
+DINO_features,"['deephand_left', 'dino_left_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,4,20,4,0.21,0.01,97.13,86.67,95.45,19,
+DINO_features,"['deephand_left', 'dino_left_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,4,20,4,0.26,0.01,96.18,84.95,94.94,16,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,1,20,4,0.31,0.02,95.41,80.64,93.24,14,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,1,20,4,0.26,0.02,96.54,81.72,94.1,15,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,20,4,0.14,0.01,98.47,86.56,96.11,16,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,20,4,0.12,0.01,98.61,85.94,95.6,18,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,4,20,4,0.15,0.01,98.45,86.01,95.53,16,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,64,4,20,4,0.15,0.01,98.47,84.17,94.85,17,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,1,20,4,0.3,0.02,95.55,79.84,92.77,18,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,1,20,4,0.32,0.02,95.33,76.97,92.24,17,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,2,20,4,0.17,0.01,97.74,83.27,94.65,19,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,2,20,4,0.29,0.02,95.35,83.82,94.08,12,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",False,0.3,0.3,0.0002,5,0.5,0,512,3,64,4,20,4,0.27,0.02,96.26,83.66,95.45,13,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",True,0.3,0.3,0.0002,5,0.5,0,512,3,64,4,20,4,0.32,0.02,95.19,83.13,94.78,12,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,1,20,4,0.44,0.02,92.6,75.04,91.25,19,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,1,20,4,0.43,0.02,92.58,77.76,92.18,17,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,2,20,4,0.25,0.02,96.13,83.55,94.78,19,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,2,20,4,0.26,0.02,95.7,80.88,93.9,19,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",False,0.4,0.4,0.0002,5,0.5,0,512,3,64,4,20,4,0.31,0.02,95.26,81.54,93.88,16,
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",True,0.4,0.4,0.0002,5,0.5,0,512,3,64,4,20,4,0.3,0.02,95.67,81.56,94.61,18,
+DINO_features,['deephand_left'],False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.08,0.02,99.2,83.13,92.71,28,2024-11-22_22-20-45
+DINO_features,['dino_left_large'],False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.12,0.02,98.73,82.25,94.01,26,2024-11-22_22-25-43
+DINO_features,['dino_left_small'],False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.17,0.02,98.43,79.91,92.73,25,2024-11-22_22-29-32
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.16,0.01,97.36,90.36,96.88,11,2024-11-22_22-35-59
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.11,0.01,98.95,87.53,96.2,21,2024-11-22_22-43-33
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.15,0.01,98.36,87.95,95.78,27,2024-11-22_22-53-02
+DINO_features,"['deephand_left', 'dino_left_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.1,0.01,98.9,90.34,96.71,17,2024-11-22_23-00-20
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.1,0.01,98.93,86.52,95.38,22,2024-11-22_23-07-56
+DINO_features,"['deephand_left', 'dino_left_small', 'dino_face_small', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.16,0.01,98.29,87.09,95.76,25,2024-11-22_23-16-38
+DINO_features,"['deephand_left', 'dino_face_small', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.19,0.02,98.2,82.58,93.66,27,2024-11-22_23-24-31
+DINO_features,"['dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.42,0.02,94.01,75.64,90.78,29,2024-11-22_23-32-25
+DINO_features,"['dino_left_small', 'dino_face_small', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.62,0.02,89.73,70.36,88,23,2024-11-22_23-39-32
+DINO_features,"['deephand_left', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.1,0.02,99.34,79.4,91.78,27,2024-11-22_23-46-43
+DINO_features,"['deephand_left', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.1,0.01,99.15,84.68,94.61,28,2024-11-22_23-54-03
+DINO_features,"['dino_left_large', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.26,0.02,96.9,77.76,90.98,25,2024-11-23_00-01-16
+DINO_features,"['dino_left_small', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.35,0.02,95.82,71.55,88.44,29,2024-11-23_00-07-26
+DINO_features,"['dino_left_large', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.23,0.02,97.38,81.61,93.63,29,2024-11-23_00-14-23
+DINO_features,"['dino_left_small', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,0.29,0.02,96.32,79.38,93.3,27,2024-11-23_00-20-30
+DINO_features,['dino_face_small'],False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,1.98,0.06,58.19,31.37,43.88,21,2024-11-23_22-29-01
+DINO_features,['dino_right_small'],False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,1.6,0.04,67.02,52.7,61.83,29,2024-11-23_22-32-39
+DINO_features,['dino_face_small'],False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,1.84,0.06,61.29,32.65,46.07,24,2024-11-26_08-58-45
+DINO_features,['dino_right_large'],False,0.2,0.2,0.0002,5,0.5,0,512,3,64,2,30,4,1.74,0.04,64.81,56.1,64.12,20,2024-11-26_09-04-26
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.2,0.2,0.0002,5,0.5,0,512,3,64,1,20,4,0.17,0.01,97.36,86.96,95.31,15,
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.1,0.1,0.0002,5,0.5,0,512,3,32,2,20,4,0.07,0.02,98.66,87.02,97.26,13,2024-12-01_01-01-46
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.1,0.1,0.0002,5,0.5,0,512,3,32,2,20,4,0.04,0.02,99.29,86.63,96.99,19,2024-12-01_01-08-10
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.2,0.2,0.0002,5,0.5,0,512,3,32,2,20,4,0.05,0.02,99.15,86.56,96.62,18,2024-12-01_01-17-46
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.2,0.2,0.0002,5,0.5,0,512,3,32,2,20,4,0.06,0.02,98.83,86.43,97.17,17,2024-12-01_01-23-47
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_right_small']",True,0.1,0.1,0.0002,5,0.5,0,512,3,32,2,20,4,0.07,0.02,98.99,86.38,96.95,18,2024-12-01_01-33-55
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_right_small']",False,0.1,0.1,0.0002,5,0.5,0,512,3,32,2,20,4,0.06,0.02,98.95,87.82,97.26,18,2024-12-01_01-40-57
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_right_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,32,2,20,4,0.09,0.02,98.65,85.26,96.84,18,2024-12-01_01-51-08
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,32,2,20,4,0.13,0.02,97.93,83.97,96.09,17,2024-12-01_01-57-59
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.1,0.1,0.0002,5,0.5,0,512,3,32,2,20,4,0.09,0.02,98.37,86.12,96.53,14,2024-12-01_02-08-15
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.1,0.1,0.0002,5,0.5,0,512,3,32,2,20,4,0.07,0.02,98.93,84.22,95.71,17,2024-12-01_02-15-03
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,32,2,20,4,0.10,0.02,98.36,83.16,95.45,15,2024-12-01_02-25-21
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,32,2,20,4,0.09,0.03,98.63,81.96,95.11,19,2024-12-01_02-32-20
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.1,0.1,0.0002,5,0.5,0,512,3,32,2,20,4,0.10,0.02,98.73,83.69,95.71,19,2024-12-01_02-43-28
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.1,0.1,0.0002,5,0.5,0,512,3,32,2,20,4,0.10,0.02,98.45,84.44,96.07,18,2024-12-01_02-51-38
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,32,2,20,4,0.22,0.03,96.69,81.96,95.20,19,2024-12-01_03-03-22
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,32,2,20,4,0.39,0.03,92.68,78.58,94.54,11,2024-12-01_03-11-31
+DINO_features,"['deephand_left', 'dino_left_large', 'heatmap']",False,0.1,0.1,0.0002,5,0.5,0,512,3,32,2,20,4,0.05,0.02,99.19,87.47,97.35,18,2024-12-01_04-23-02
+DINO_features,"['deephand_left', 'dino_left_large', 'heatmap']",False,0.1,0.1,0.0002,5,0.5,0,512,3,32,2,20,4,0.05,0.02,99.11,89.94,97.75,19,2024-12-01_08-24-33
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.1,0.1,0.0002,5,0.5,0,512,3,16,2,20,4,0.06,0.04,98.51,84.99,96.88,14,2024-12-01_09-09-08
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.1,0.1,0.0002,5,0.5,0,512,3,16,2,20,4,0.04,0.04,99.07,83.53,96.13,16,2024-12-01_09-17-22
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.2,0.2,0.0002,5,0.5,0,512,3,16,2,20,4,0.08,0.04,98.00,85.30,97.04,12,2024-12-01_09-30-48
+DINO_features,"['deephand_left', 'dino_left_large']",False,0.2,0.2,0.0002,5,0.5,0,512,3,16,2,20,4,0.09,0.04,97.96,82.89,96.40,14,2024-12-01_09-39-02
+DINO_features,"['deephand_left', 'dino_left_large', 'heatmap']",False,0.1,0.1,0.0002,5,0.5,0,512,3,16,2,20,4,0.04,0.04,99.19,83.44,96.46,17,2024-12-01_10-49-35
+DINO_features,"['deephand_left', 'dino_left_large', 'heatmap']",False,0.2,0.2,0.0002,5,0.5,0,512,3,16,2,20,4,0.07,0.04,98.37,82.98,96.35,16,2024-12-01_11-59-49
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'heatmap']",False,0.1,0.1,0.0002,5,0.5,0,512,3,16,2,20,4,0.06,0.05,98.81,81.85,96.04,17,2024-12-01_13-11-08
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'heatmap']",False,0.2,0.2,0.0002,5,0.5,0,512,3,16,2,20,4,0.09,0.04,98.32,81.96,96.60,17,2024-12-01_14-23-02
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_right_small']",True,0.1,0.1,0.0002,5,0.5,0,512,3,16,2,20,4,0.04,0.04,99.28,85.76,97.21,17,2024-12-01_14-37-57
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_right_small']",False,0.1,0.1,0.0002,5,0.5,0,512,3,16,2,20,4,0.07,0.04,98.51,83.07,96.07,15,2024-12-01_14-47-25
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_right_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,16,2,20,4,0.07,0.04,98.77,84.04,96.35,18,2024-12-01_15-02-21
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,16,2,20,4,0.11,0.05,97.89,81.54,95.84,16,2024-12-01_15-12-00
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.1,0.1,0.0002,5,0.5,0,512,3,16,2,20,4,0.03,0.05,99.48,81.79,95.78,17,2024-12-01_15-26-43
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.1,0.1,0.0002,5,0.5,0,512,3,16,2,20,4,0.06,0.05,99.06,78.80,94.30,19,2024-12-01_15-36-07
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,16,2,20,4,0.05,0.05,99.09,81.23,95.62,17,2024-12-01_15-51-19
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,16,2,20,4,0.10,0.06,98.17,76.88,94.30,17,2024-12-01_16-00-56
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.1,0.1,0.0002,5,0.5,0,512,3,16,2,20,4,0.12,0.05,98.28,80.68,95.53,16,2024-12-01_16-16-59
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.1,0.1,0.0002,5,0.5,0,512,3,16,2,20,4,0.13,0.05,97.63,78.98,94.92,18,2024-12-01_16-27-23
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.2,0.2,0.0002,5,0.5,0,512,3,16,2,20,4,0.18,0.05,97.09,79.64,95.18,16,2024-12-01_16-43-24
+DINO_features,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",False,0.2,0.2,0.0002,5,0.5,0,512,3,16,2,20,4,0.21,0.05,95.94,77.23,94.74,17,2024-12-01_16-54-02
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,1024,4,128,2,20,4,0.05,0.01,99.29,98.98,96.77,15,2024-12-01_22-53-30
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,1024,4,128,2,20,4,0.04,0.01,99.49,99.85,97.37,16,2024-12-01_23-09-25
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,1024,4,128,2,20,4,0.05,0.01,99.06,99.49,96.82,13,2024-12-01_23-25-27
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,1024,4,128,2,20,4,0.05,0.01,99.14,98.63,96.93,14,2024-12-01_23-41-31
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,1024,3,128,2,20,4,0.03,0.00,99.61,101.92,97.68,15,2024-12-01_23-54-08
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,1024,3,128,2,20,4,0.04,0.00,99.46,103.32,97.88,14,2024-12-02_00-06-49
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,1024,3,128,2,20,4,0.08,0.00,98.32,102.72,97.81,9,2024-12-02_00-19-28
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,1024,3,128,2,20,4,0.04,0.00,99.37,101.06,97.77,13,2024-12-02_00-32-06
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,1024,2,128,2,20,4,0.04,0.00,99.58,104.11,98.39,14,2024-12-02_00-41-12
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,1024,2,128,2,20,4,0.04,0.00,99.69,102.76,98.08,15,2024-12-02_00-50-19
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,1024,2,128,2,20,4,0.03,0.00,99.75,102.83,97.94,18,2024-12-02_00-59-32
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,1024,2,128,2,20,4,0.03,0.00,99.76,103.56,98.17,19,2024-12-02_01-08-41
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,512,4,128,2,20,4,0.08,0.01,99.46,99.43,96.33,19,2024-12-02_01-15-23
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,512,4,128,2,20,4,0.13,0.01,98.70,97.86,96.53,13,2024-12-02_01-22-09
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,512,4,128,2,20,4,0.08,0.01,99.43,99.69,96.75,19,2024-12-02_01-28-52
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,512,4,128,2,20,4,0.13,0.01,98.74,97.26,96.09,13,2024-12-02_01-35-36
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,512,3,128,2,20,4,0.08,0.01,99.63,100.29,97.17,19,2024-12-02_01-41-27
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,512,3,128,2,20,4,0.08,0.01,99.64,100.71,97.37,19,2024-12-02_01-47-19
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,512,3,128,2,20,4,0.07,0.01,99.58,100.13,97.75,19,2024-12-02_01-53-15
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,512,3,128,2,20,4,0.07,0.01,99.63,100.07,97.52,19,2024-12-02_01-59-10
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,512,2,128,2,20,4,0.13,0.01,99.29,101.95,97.70,13,2024-12-02_02-04-10
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,512,2,128,2,20,4,0.10,0.01,99.51,101.64,97.66,15,2024-12-02_02-09-08
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,512,2,128,2,20,4,0.09,0.01,99.60,100.51,97.48,16,2024-12-02_02-14-06
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,512,2,128,2,20,4,0.08,0.01,99.64,101.75,97.83,19,2024-12-02_02-19-04
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,216,4,128,2,20,4,0.69,0.01,94.46,85.54,91.09,19,2024-12-02_02-23-23
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,216,4,128,2,20,4,0.68,0.01,94.17,88.93,93.04,16,2024-12-02_02-27-41
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,216,4,128,2,20,4,0.70,0.01,94.00,87.84,92.31,19,2024-12-02_02-32-02
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,216,4,128,2,20,4,0.66,0.01,94.79,88.02,92.40,19,2024-12-02_02-36-22
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,216,3,128,2,20,4,0.53,0.01,96.41,92.40,94.94,19,2024-12-02_02-40-34
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,216,3,128,2,20,4,0.57,0.01,96.17,92.40,94.78,18,2024-12-02_02-44-45
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,216,3,128,2,20,4,0.55,0.01,95.99,92.33,94.47,18,2024-12-02_02-48-58
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,216,3,128,2,20,4,0.57,0.01,95.93,94.32,95.76,16,2024-12-02_02-53-09
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,216,2,128,2,20,4,0.73,0.01,94.93,94.74,95.87,13,2024-12-02_02-57-13
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,216,2,128,2,20,4,0.61,0.01,96.14,94.96,95.91,15,2024-12-02_03-01-16
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,216,2,128,2,20,4,0.67,0.01,95.30,95.93,95.69,14,2024-12-02_03-05-18
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,216,2,128,2,20,4,0.64,0.01,96.00,94.89,95.27,15,2024-12-02_03-09-19
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,1024,4,64,2,20,4,0.04,0.01,99.28,90.34,96.26,17,2024-12-02_03-30-08
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,1024,4,64,2,20,4,0.04,0.01,99.18,89.81,96.68,15,2024-12-02_03-51-06
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,1024,4,64,2,20,4,0.04,0.01,99.22,90.76,96.64,15,2024-12-02_04-12-01
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,1024,4,64,2,20,4,0.03,0.01,99.51,90.58,96.53,18,2024-12-02_04-32-58
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,1024,3,64,2,20,4,0.03,0.01,99.61,93.46,97.79,17,2024-12-02_04-49-19
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,1024,3,64,2,20,4,0.02,0.01,99.58,92.84,97.66,18,2024-12-02_05-05-41
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,1024,3,64,2,20,4,0.03,0.01,99.36,92.93,97.44,15,2024-12-02_05-22-03
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,1024,3,64,2,20,4,0.03,0.01,99.55,93.10,97.75,16,2024-12-02_05-38-28
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,1024,2,64,2,20,4,0.04,0.01,99.39,94.01,97.83,14,2024-12-02_05-50-10
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,1024,2,64,2,20,4,0.03,0.01,99.60,94.03,98.03,15,2024-12-02_06-01-53
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,1024,2,64,2,20,4,0.03,0.01,99.57,94.54,98.05,15,2024-12-02_06-13-41
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,1024,2,64,2,20,4,0.03,0.01,99.65,93.02,97.88,16,2024-12-02_06-25-23
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,512,4,64,2,20,4,0.13,0.01,97.85,88.33,96.09,11,2024-12-02_06-33-43
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,512,4,64,2,20,4,0.23,0.01,95.65,88.66,96.02,8,2024-12-02_06-42-03
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,512,4,64,2,20,4,0.07,0.01,99.09,87.73,95.89,17,2024-12-02_06-50-22
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,512,4,64,2,20,4,0.10,0.01,98.52,89.17,95.98,13,2024-12-02_06-58-44
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,512,3,64,2,20,4,0.09,0.01,98.91,92.97,97.37,12,2024-12-02_07-05-52
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,512,3,64,2,20,4,0.06,0.01,99.52,90.83,96.97,17,2024-12-02_07-12-59
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,512,3,64,2,20,4,0.05,0.01,99.47,92.71,97.19,17,2024-12-02_07-20-05
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.005,512,3,64,2,20,4,0.05,0.01,99.51,91.93,97.52,18,2024-12-02_07-27-12
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.1,512,2,64,2,20,4,0.05,0.01,99.67,93.90,97.86,19,2024-12-02_07-33-09
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.05,512,2,64,2,20,4,0.05,0.01,99.64,92.66,97.48,19,2024-12-02_07-39-04
+DINO_features,"['deephand_left', 'dino_left_large']",True,0.05,0.05,0.0002,5,0.5,0.01,512,2,64,2,20,4,0.07,0.01,99.40,93.37,97.79,14,2024-12-02_07-45-21

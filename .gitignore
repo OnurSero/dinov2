@@ -13,3 +13,4 @@ classsification/data/
 classsification/lightning_logs/
 classsification/others/archive/
 classsification/lstm/lstm_results/*.pth
+classsification/lstm/lstm_results/Pth_Files/*.pth

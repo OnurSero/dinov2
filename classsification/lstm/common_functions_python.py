@@ -183,7 +183,7 @@ def plot_result(avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accurac
 
 def create_train_dependencies(model):
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.AdamW(model.parameters(), lr=config_file['lr'])
+    optimizer = optim.AdamW(model.parameters(), lr=config_file['lr'], weight_decay=config_file['weight_decay'])
     scheduler = lr_scheduler.StepLR(optimizer, step_size=config_file['step_size'], gamma=config_file['gamma']) ## CosineAnnealingLR Dene
     return criterion, optimizer, scheduler
 
@@ -312,7 +312,7 @@ def create_train_dependencies(model):
 #             _, predicted = torch.topk(outputs.data, 1)
 #             _, predicted_top_5 = torch.topk(outputs.data, 5)
 #             total += labels.size(0)
-#             correct += (predicted.to(device) == labels).sum().item()
+#             correct += (predicted.flatten()== labels.flatten()).sum().item()
 #             top_5_correct += sum([(predicted_top_5[i] == labels[i]).any().item() for i in range(len(labels))])
 #             running_loss += loss.item()
 
