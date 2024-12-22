@@ -55,12 +55,23 @@ class CustomImageDinoDataset(Dataset):
         )
 
         embeddings_list = []
-        for features in self.features_list:
-            embeddings = [features[idx][i] for i in active_frame_indices]
-            embeddings = embeddings[0::config_file['frame_frequency']]
-            embeddings_list.append(embeddings)
+        if (config_file['concatenate']):
+            for features in self.features_list:
+                embeddings = [features[idx][i] for i in active_frame_indices]
+                embeddings = embeddings[0::config_file['frame_frequency']]
+                embeddings_list.append(embeddings)
+        else:
+            for features in self.features_list:
+                embeddings = [features[idx][i] for i in active_frame_indices]
+                embeddings = embeddings[0::config_file['frame_frequency']]
+                same_len_embeddings = next((embeddings_element for embeddings_element in embeddings_list if len(embeddings_element[0]) == len(embeddings[0])), None)
 
+                if same_len_embeddings:
+                    same_len_embeddings = np.add(same_len_embeddings, embeddings)
+                else:
+                    embeddings_list.append(embeddings)
         concatenate_embeddings = np.concatenate(embeddings_list, axis=1)
+
         np_stacked_array = np.stack(concatenate_embeddings)
         tensor = torch.from_numpy(np_stacked_array)
         return tensor, len(np_stacked_array), self.labels[idx] 
@@ -95,12 +106,21 @@ def create_data_loaders(datasets):
 class VideoDINOClassifierLSTM(nn.Module):
     def __init__(self, input_dim, hidden_dim, num_layers, output_dim, fc_dropout, lstm_dropout, bidirectional_lstm):
         super(VideoDINOClassifierLSTM, self).__init__()
+        self.attention = nn.MultiheadAttention(embed_dim=input_dim, num_heads=4, batch_first=True)
         self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True, dropout = lstm_dropout, bidirectional = bidirectional_lstm)
         self.fc = nn.Linear(hidden_dim, output_dim)
         self.dropout = nn.Dropout(fc_dropout)
 
     def forward(self, x):
-        # LSTM expects input shape: (batch, seq, features)
+        # ## Attention
+        # packed_output, _ = self.attention(query=x.data.unsqueeze(0), 
+        #                                   key=x.data.unsqueeze(0), 
+        #                                   value=x.data.unsqueeze(0))
+        # attn_output = packed_output.squeeze(0)
+        # packed_attn_output = x._replace(data=attn_output)
+
+        # _, (hidden, _) = self.lstm(packed_attn_output)  # Use last hidden state
+
         _, (hidden, _) = self.lstm(x)  # Use last hidden state
         output = self.dropout(hidden[-1])
         output = self.fc(output)  # Take hidden state of the last LSTM layer

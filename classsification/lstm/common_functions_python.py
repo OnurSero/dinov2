@@ -76,6 +76,8 @@ dataset_table = {
                 'deephand_left_test': '/media/osero/SamsungSSD/pickles/deephand_left_frames_test.pickle',
                 'heatmap_train': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_train.pkl',
                 'heatmap_test': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_test.pkl',
+                'heatmap_3d_train': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_train.pkl',
+                'heatmap_3d_test': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_test.pkl',
                 }
 
 pose_pickle_folder = '/media/osero/SamsungSSD/CMPE_SSD/mmpose-full/'

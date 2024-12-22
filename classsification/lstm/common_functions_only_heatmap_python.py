@@ -1,24 +1,18 @@
 from common_functions_python import *
 from pyskl_lib import *
 import copy as cp
+from torchvision.models.video import r3d_18  # A ResNet-18 pre-trained for 3D inputs
 
 # Suppress the specific UserWarning
 warnings.filterwarnings("ignore", category=UserWarning, message=".*copy constructor.*")
 warnings.filterwarnings("ignore", category=UserWarning)
 
 class CustomImageHeatmapDataset(Dataset):
-    def __init__(self, pickle_file_name_list, heatmap_pickle_name):
+    def __init__(self, heatmap_pickle_name):
 
         ## DINO / Deephand features
         paths_list = []
-        features_list = []
         labels_list = []
-        for pickle_file_name in pickle_file_name_list:
-            pickle_file = open(pickle_file_name, 'rb')
-            paths, features, labels = pickle.load(pickle_file)
-            paths_list.append(paths)
-            features_list.append(features)
-            labels_list.append(labels)
 
         ## Keypoint heatmaps
         heatmap_pickle_file = open(heatmap_pickle_name, 'rb')
@@ -27,8 +21,7 @@ class CustomImageHeatmapDataset(Dataset):
         annotation_paths = [x['frame_dir'] for x in annotations]
 
         paths_list.append(annotation_paths)
-        all_feature_list = features_list[:]
-        all_feature_list.append(annotations)
+        all_feature_list = annotations
         labels_list.append(annotation_labels)
         check_labels(labels_list)
         check_feature_lenghts(all_feature_list)
@@ -37,9 +30,8 @@ class CustomImageHeatmapDataset(Dataset):
         self.classes = np.unique(labels_list[0])
         label_dict = create_label_dict(self.classes)
 
-        self.pickle_file_name_list = pickle_file_name_list
         self.heatmap_features = annotations
-        self.features_list = features_list
+        self.all_feature_list = all_feature_list
         self.labels = [label_dict[x] for x in labels_list[0]]
 
     def __len__(self):
@@ -58,31 +50,8 @@ class CustomImageHeatmapDataset(Dataset):
         active_frame_indices = (
             active_frame_indices
             if active_frame_indices.size > 10
-            else np.arange(0, len(self.features_list[0][idx]))
+            else np.arange(0, self.all_feature_list[idx]['total_frames'])
         )
-
-        embeddings_list = []
-        if (config_file['concatenate']):
-            ## Dino Deephand embeddings
-            for features in self.features_list:
-                embeddings = [features[idx][i] for i in active_frame_indices]
-                embeddings = embeddings[0::config_file['frame_frequency']]
-                embeddings_list.append(embeddings)
-        else:
-            for features in self.features_list:
-                embeddings = [features[idx][i] for i in active_frame_indices]
-                embeddings = embeddings[0::config_file['frame_frequency']]
-                # Find the first person with age 25
-                same_len_embeddings = next((embeddings_element for embeddings_element in embeddings_list if len(embeddings_element[0]) == len(embeddings[0])), None)
-
-                if same_len_embeddings:
-                    same_len_embeddings = np.add(same_len_embeddings, embeddings)
-                else:
-                    embeddings_list.append(embeddings)
-        
-        concatenate_embeddings = np.concatenate(embeddings_list, axis=1)
-        np_stacked_array = np.stack(concatenate_embeddings)
-        embeddings_tensor = torch.from_numpy(np_stacked_array)
 
         ## Keypoint heatmaps embeddings
         keypoint_heatmaps1 = get_pseudo_heatmap(cp.deepcopy(self.heatmap_features[idx]))
@@ -92,20 +61,16 @@ class CustomImageHeatmapDataset(Dataset):
         np_stacked_array = np.stack(keypoint_heatmaps)
         keypoints_tensor = torch.from_numpy(np_stacked_array)
 
-        return embeddings_tensor, keypoints_tensor, len(np_stacked_array), self.labels[idx] 
+        return keypoints_tensor, len(np_stacked_array), self.labels[idx] 
 
 # Step 2: Collate function
-def heatmap_collate_fn(batch):
-    feature_sequences, heatmap_sequence, lengths, labels = zip(*batch)
+def only_heatmap_collate_fn(batch):
+    heatmap_sequence, lengths, labels = zip(*batch)
     lengths = torch.tensor(lengths)
     labels = torch.tensor(labels)
 
-    # Pad sequences to the maximum length in the batch
-    feature_padded_sequences = pad_sequence([torch.tensor(seq) for seq in feature_sequences], batch_first=True)
-
     # Sort by lengths in descending order
     sorted_lengths, sorted_indices = lengths.sort(descending=True)
-    feature_sorted_sequences = feature_padded_sequences[sorted_indices]
     sorted_labels = labels[sorted_indices]
 
 
@@ -113,9 +78,9 @@ def heatmap_collate_fn(batch):
     heatmap_padded_sequences = pad_sequence([torch.tensor(seq) for seq in heatmap_sequence], batch_first=True)
     heatmap_orted_sequences = heatmap_padded_sequences[sorted_indices]
 
-    return feature_sorted_sequences,heatmap_orted_sequences, sorted_lengths, sorted_labels
+    return heatmap_orted_sequences, sorted_lengths, sorted_labels
 
-def create_heatmap_data_loaders(datasets):
+def create_only_heatmap_data_loaders(datasets):
     heatmap_dataset_list = [s for s in datasets if 'heatmap' in s]
     feature_dataset_list = [s for s in datasets if 'heatmap' not in s]
 
@@ -128,55 +93,62 @@ def create_heatmap_data_loaders(datasets):
     heatmap_train_file_name = dataset_table[heatmap_dataset_list[0] + '_train']
     heatmap_test_file_name =  dataset_table[heatmap_dataset_list[0] + '_test']
 
-    train_dataset = CustomImageHeatmapDataset(pickle_file_name_list = train_file_names, heatmap_pickle_name = heatmap_train_file_name)
-    test_dataset = CustomImageHeatmapDataset(pickle_file_name_list = test_file_names,  heatmap_pickle_name = heatmap_test_file_name)
-    train_loader = DataLoader(train_dataset, batch_size=config_file['batch_size'], shuffle=True, collate_fn=heatmap_collate_fn, num_workers=config_file['num_workers']) # Adjust batch size as needed
-    test_loader = DataLoader(test_dataset, batch_size=config_file['batch_size'], shuffle=True, collate_fn=heatmap_collate_fn, num_workers=config_file['num_workers'])
+    train_dataset = CustomImageHeatmapDataset(heatmap_pickle_name = heatmap_train_file_name)
+    test_dataset = CustomImageHeatmapDataset(heatmap_pickle_name = heatmap_test_file_name)
+    train_loader = DataLoader(train_dataset, batch_size=config_file['batch_size'], shuffle=True, collate_fn=only_heatmap_collate_fn, num_workers=config_file['num_workers']) # Adjust batch size as needed
+    test_loader = DataLoader(test_dataset, batch_size=config_file['batch_size'], shuffle=True, collate_fn=only_heatmap_collate_fn, num_workers=config_file['num_workers'])
     return train_loader, test_loader
     
 class VideoClassifierHeatmapLSTM(nn.Module):
-    def __init__(self, extra_input_dim, hidden_dim, num_layers, output_dim, fc_dropout, lstm_dropout, bidirectional_lstm):
+    def __init__(self, hidden_dim, num_layers, output_dim, fc_dropout, lstm_dropout, bidirectional_lstm):
         super(VideoClassifierHeatmapLSTM, self).__init__()
-        self.cnn = models.resnet18(pretrained=True)
-        self.cnn.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
-        input_dim = self.cnn.fc.in_features + extra_input_dim
-        # self.attention = nn.MultiheadAttention(embed_dim=input_dim, num_heads=4, batch_first=True)
-        self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True, dropout = lstm_dropout, bidirectional = bidirectional_lstm)
+
+        if (any('heatmap_3d' in s for s in config_file['datasets'])):
+            self.cnn = r3d_18(pretrained=True)  # Use pre-trained 3D ResNet-18
+            self.cnn.stem[0] = nn.Conv3d(1, 64, kernel_size=(3, 7, 7), stride=(1, 2, 2), padding=(1, 3, 3), bias=False)
+            hidden_dim = self.cnn.fc.in_features
+        else:
+            self.cnn = models.resnet18(pretrained=True)
+            self.cnn.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
+            input_dim = self.cnn.fc.in_features
+
+            self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True, dropout = lstm_dropout, bidirectional = bidirectional_lstm)
+
+        
         self.fc = nn.Linear(hidden_dim, output_dim)
         self.dropout = nn.Dropout(fc_dropout)
         self.cnn.fc = nn.Identity()  # Remove final FC layer of ResNet
 
-    def forward(self, dino_feature, heatmap, lengths):
-        batch_size, time_steps, height, width = heatmap.size()
-        heatmap = heatmap.view(batch_size * time_steps, 1, height, width)
-        
-        # Feature extraction
-        cnn_features = self.cnn(heatmap)
-        cnn_features = cnn_features.view(batch_size, time_steps, -1)  # Reshape for LSTM
-        features = torch.cat((cnn_features, dino_feature), dim=2)
-        packed_data = pack_padded_sequence(features, lengths, batch_first=True, enforce_sorted=True)
+    def forward(self, heatmap, lengths):
+        if (any('heatmap_3d' in s for s in config_file['datasets'])):
+            input_tensor = heatmap.unsqueeze(1)  # Shape becomes [16, 58, 1, 64, 64]
+            cnn_features = self.resnet3d(input_tensor)
+            output = self.dropout(cnn_features)
+        else:
+            batch_size, time_steps, height, width = heatmap.size()
+            heatmap = heatmap.view(batch_size * time_steps, 1, height, width)
+            
+            # Feature extraction
+            cnn_features = self.cnn(heatmap)
+            cnn_features = cnn_features.view(batch_size, time_steps, -1)  # Reshape for LSTM
+            features = cnn_features
+            packed_data = pack_padded_sequence(features, lengths, batch_first=True, enforce_sorted=True)
 
-        # packed_output, _ = self.attention(query=packed_data.data.unsqueeze(0), 
-        #                                   key=packed_data.data.unsqueeze(0), 
-        #                                   value=packed_data.data.unsqueeze(0))
-        # attn_output = packed_output.squeeze(0)
-        # packed_attn_output = packed_data._replace(data=attn_output)
-        # _, (hidden, _) = self.lstm(packed_attn_output)  # Use last hidden state
+            _, (hidden, _) = self.lstm(packed_data)  # Use last hidden state
+            output = self.dropout(hidden[-1])
 
-        _, (hidden, _) = self.lstm(packed_data)  # Use last hidden state
-        output = self.dropout(hidden[-1])
         output = self.fc(output)  # Take hidden state of the last LSTM layer
         return output
        
-def create_heatmap_model(input_dim, output_dim):
-    model = VideoClassifierHeatmapLSTM(extra_input_dim=input_dim, hidden_dim=config_file['hidden_dim'], num_layers=config_file['num_layers'],
+def create_only_heatmap_model(output_dim):
+    model = VideoClassifierHeatmapLSTM(hidden_dim=config_file['hidden_dim'], num_layers=config_file['num_layers'],
                                 output_dim=output_dim, fc_dropout=config_file['mlp_dropout'], lstm_dropout=config_file['lstm_dropout'],
                                 bidirectional_lstm=config_file['bidirectional_lstm'])
     model = model.to(device)
     return model
 
 
-def test_model_heatmap(test_loader, model, criterion):
+def test_model_only_heatmap(test_loader, model, criterion):
     correct = 0
     top_5_correct = 0
     total = 0
@@ -186,14 +158,13 @@ def test_model_heatmap(test_loader, model, criterion):
     test_labels = []
 
     with torch.no_grad():
-        for (features, heatmap_features, lengths, labels) in test_loader:
+        for (heatmap_features, lengths, labels) in test_loader:
 
-            features = features.to(device)
             heatmap_features = heatmap_features.to(device)
             labels = labels.to(device)
 
             # calculate outputs by running images through the network
-            outputs = model(features, heatmap_features, lengths)
+            outputs = model(heatmap_features, lengths)
             loss = criterion(outputs, labels)
             
             # the class with the highest energy is what we choose as prediction
@@ -219,20 +190,17 @@ def test_model_heatmap(test_loader, model, criterion):
     print(f'Accuracy of the network on the {len(test_loader.dataset)} test video: {accuracy:.4f} %, top5: {top_5_accuracy:.4f} %, avg_loss: {avg_loss}')
     return accuracy, top_5_accuracy, avg_loss
 
-def train_loop_heatmap():
-    train_loader, test_loader = create_heatmap_data_loaders(datasets = config_file['datasets'])
+def train_loop_only_heatmap():
+    train_loader, test_loader = create_only_heatmap_data_loaders(datasets = config_file['datasets'])
 
-    input_dim = train_loader.dataset[0][0][0].shape[0] # Get input dimension from a single feature from a video
-    cnn_dim = train_loader.dataset[0][1][0].shape # Get input dimension from a single feature from a video
+    cnn_dim = train_loader.dataset[0][0][0].shape # Get input dimension from a single feature from a video
     num_classes = len(set(train_loader.dataset.classes))
     print("datasets: ", config_file['datasets'])
-    print("input_dim: ", input_dim, " num_classes: ", num_classes)
+    print("num_classes: ", num_classes)
     print("cnn_dim: ", cnn_dim)
     print("train_dataset size: ", len(train_loader.dataset))
     print("test_dataset size: ", len(test_loader.dataset))
-    print('train_loader pickle_file_name_list: ', train_loader.dataset.pickle_file_name_list)
-    print('test_loader pickle_file_name_list: ', test_loader.dataset.pickle_file_name_list)
-    model = create_heatmap_model(input_dim, num_classes)
+    model = create_only_heatmap_model(num_classes)
 
     criterion, optimizer, scheduler = create_train_dependencies(model)
 
@@ -251,14 +219,13 @@ def train_loop_heatmap():
         loop = tqdm(train_loader)
         running_loss = 0.0
         running_accuracy= 0.0
-        for (features, heatmap_features, lengths, labels) in loop:
+        for (heatmap_features, lengths, labels) in loop:
 
-            features = features.to(device)
             heatmap_features = heatmap_features.to(device)
             labels = labels.to(device)
 
             optimizer.zero_grad()
-            outputs = model(features, heatmap_features, lengths)
+            outputs = model(heatmap_features, lengths)
             loss = criterion(outputs, labels)
 
             predictions = outputs.argmax(dim=1, keepdim=True).squeeze()
@@ -276,7 +243,7 @@ def train_loop_heatmap():
         avg_loss = running_loss / len(train_loader)
         avg_accuracy = running_accuracy / len(train_loader)
         print(f"Time: {get_current_time()} Epoch [{epoch}], Avg loss: {avg_loss:.4f}, Avg accuracy: {avg_accuracy:.4f}")
-        avg_test_accuracy, avg_top5_test_accuracy, avg_test_loss = test_model_heatmap(test_loader, model, criterion)
+        avg_test_accuracy, avg_top5_test_accuracy, avg_test_loss = test_model_only_heatmap(test_loader, model, criterion)
 
         avg_loss_list.append(avg_loss)
         avg_accuracy_list.append(avg_accuracy)
@@ -286,7 +253,7 @@ def train_loop_heatmap():
 
     # plot_result(avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list)
     current_time = get_current_time()
-    save_model_result(model, current_time, input_dim, num_classes, avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list)
+    save_model_result(model, current_time, 0, num_classes, avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list)
 
     del train_loader
     del test_loader
