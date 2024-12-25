@@ -74,6 +74,8 @@ dataset_table = {
                 'dino_face_small_test': '/media/osero/SamsungSSD/pickles/features_face_frames_small_test.pickle',
                 'deephand_left_train': '/media/osero/SamsungSSD/pickles/deephand_left_frames_train.pickle',
                 'deephand_left_test': '/media/osero/SamsungSSD/pickles/deephand_left_frames_test.pickle',
+                'deephand_right_train': '/media/osero/SamsungSSD/pickles/deephand_right_frames_train.pickle',
+                'deephand_right_test': '/media/osero/SamsungSSD/pickles/deephand_right_frames_test.pickle',
                 'heatmap_train': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_train.pkl',
                 'heatmap_test': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_test.pkl',
                 'heatmap_3d_train': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_train.pkl',
@@ -126,7 +128,7 @@ def check_feature_lenghts(features_list):
 def get_current_time():
     return strftime("%Y-%m-%d_%H-%M-%S", gmtime())
 
-def save_model_result(model, current_time, input_dim, num_classes, avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list):
+def save_model_result(model, current_time, input_dim, num_classes, avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list, test_prediction_results):
     ## Store as torch
     result_name = f'lstm_results/{config_file["name"]}_{current_time}.pth'
     data = {'result_name': result_name,
@@ -138,7 +140,8 @@ def save_model_result(model, current_time, input_dim, num_classes, avg_accuracy_
                 'avg_accuracy_list': avg_accuracy_list,
                 'avg_test_accuracy_list': avg_test_accuracy_list,
                 'avg_top5_test_accuracy_list': avg_top5_test_accuracy_list,
-                'avg_test_loss_list': avg_test_loss_list}
+                'avg_test_loss_list': avg_test_loss_list,
+                'test_prediction_results': test_prediction_results}
     torch.save(data, result_name)
 
     ## Store best value to csv file

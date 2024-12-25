@@ -122,7 +122,7 @@ class VideoClassifierHeatmapLSTM(nn.Module):
     def forward(self, heatmap, lengths):
         if (any('heatmap_3d' in s for s in config_file['datasets'])):
             input_tensor = heatmap.unsqueeze(1)  # Shape becomes [16, 58, 1, 64, 64]
-            cnn_features = self.resnet3d(input_tensor)
+            cnn_features = self.cnn(input_tensor)
             output = self.dropout(cnn_features)
         else:
             batch_size, time_steps, height, width = heatmap.size()
@@ -156,6 +156,7 @@ def test_model_only_heatmap(test_loader, model, criterion):
     # since we're not training, we don't need to calculate the gradients for our outputs
     test_predicted = []
     test_labels = []
+    test_predicted_top_5 = []
 
     with torch.no_grad():
         for (heatmap_features, lengths, labels) in test_loader:
@@ -183,12 +184,13 @@ def test_model_only_heatmap(test_loader, model, criterion):
 
             test_labels += (labels.cpu().numpy().tolist())
             test_predicted += (predicted.cpu().numpy().tolist())
+            test_predicted_top_5 += (predicted_top_5.cpu().numpy().tolist())
 
     avg_loss = running_loss / total
     accuracy = 100 * correct / total
     top_5_accuracy = 100 * top_5_correct / total
     print(f'Accuracy of the network on the {len(test_loader.dataset)} test video: {accuracy:.4f} %, top5: {top_5_accuracy:.4f} %, avg_loss: {avg_loss}')
-    return accuracy, top_5_accuracy, avg_loss
+    return accuracy, top_5_accuracy, avg_loss, (test_predicted, test_labels, test_predicted_top_5)
 
 def train_loop_only_heatmap():
     train_loader, test_loader = create_only_heatmap_data_loaders(datasets = config_file['datasets'])
@@ -243,7 +245,7 @@ def train_loop_only_heatmap():
         avg_loss = running_loss / len(train_loader)
         avg_accuracy = running_accuracy / len(train_loader)
         print(f"Time: {get_current_time()} Epoch [{epoch}], Avg loss: {avg_loss:.4f}, Avg accuracy: {avg_accuracy:.4f}")
-        avg_test_accuracy, avg_top5_test_accuracy, avg_test_loss = test_model_only_heatmap(test_loader, model, criterion)
+        avg_test_accuracy, avg_top5_test_accuracy, avg_test_loss, test_prediction_results = test_model_only_heatmap(test_loader, model, criterion)
 
         avg_loss_list.append(avg_loss)
         avg_accuracy_list.append(avg_accuracy)
@@ -253,7 +255,7 @@ def train_loop_only_heatmap():
 
     # plot_result(avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list)
     current_time = get_current_time()
-    save_model_result(model, current_time, 0, num_classes, avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list)
+    save_model_result(model, current_time, 0, num_classes, avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list, test_prediction_results)
 
     del train_loader
     del test_loader

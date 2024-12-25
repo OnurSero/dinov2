@@ -142,7 +142,7 @@ def test_model_dino(test_loader, model, criterion):
     # since we're not training, we don't need to calculate the gradients for our outputs
     test_predicted = []
     test_labels = []
-
+    test_predicted_top_5 = []
     with torch.no_grad():
         for features, lengths, labels in test_loader:
             packed_input = pack_padded_sequence(features, lengths, batch_first=True, enforce_sorted=True)
@@ -175,12 +175,13 @@ def test_model_dino(test_loader, model, criterion):
 
             test_labels += (labels.cpu().numpy().tolist())
             test_predicted += (predicted.cpu().numpy().tolist())
+            test_predicted_top_5 += (predicted_top_5.cpu().numpy().tolist())
 
     avg_loss = running_loss / len(test_loader.dataset)
     accuracy = (100.0 * correct) / len(test_loader.dataset)
     top_5_accuracy = (100.0 * top_5_correct) / len(test_loader.dataset)
     print(f'Accuracy of the network on the {len(test_loader.dataset)} test video: {accuracy:.4f} %, top5: {top_5_accuracy:.4f} %, avg_loss: {avg_loss}, total: {total}')
-    return accuracy, top_5_accuracy, avg_loss
+    return accuracy, top_5_accuracy, avg_loss, (test_predicted, test_labels, test_predicted_top_5)
 
 def train_loop_dino():
     train_loader, test_loader = create_data_loaders(config_file['datasets'])
@@ -240,7 +241,7 @@ def train_loop_dino():
         avg_loss = running_loss / len(train_loader)
         avg_accuracy = running_accuracy / len(train_loader)
         print(f"Time: {get_current_time()} Epoch [{epoch}], Avg loss: {avg_loss:.4f}, Avg accuracy: {avg_accuracy:.4f}")
-        avg_test_accuracy, avg_top5_test_accuracy, avg_test_loss = test_model_dino(test_loader, model, criterion)
+        avg_test_accuracy, avg_top5_test_accuracy, avg_test_loss, test_prediction_results = test_model_dino(test_loader, model, criterion)
 
         avg_loss_list.append(avg_loss)
         avg_accuracy_list.append(avg_accuracy)
@@ -250,7 +251,7 @@ def train_loop_dino():
 
     # plot_result(avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list)
     current_time = get_current_time()
-    save_model_result(model, current_time, input_dim, num_classes, avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list)
+    save_model_result(model, current_time, input_dim, num_classes, avg_accuracy_list, avg_test_accuracy_list, avg_top5_test_accuracy_list, avg_loss_list, avg_test_loss_list, test_prediction_results)
 
     del train_loader
     del test_loader
