@@ -47,6 +47,7 @@ import torch
 # Suppress the specific UserWarning
 warnings.filterwarnings("ignore", category=UserWarning, message=".*copy constructor.*")
 warnings.filterwarnings("ignore", category=UserWarning)
+KEYPOINT_NUMBER = 13
 
 config_file = {}
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -76,10 +77,14 @@ dataset_table = {
                 'deephand_left_test': '/media/osero/SamsungSSD/pickles/deephand_left_frames_test.pickle',
                 'deephand_right_train': '/media/osero/SamsungSSD/pickles/deephand_right_frames_train.pickle',
                 'deephand_right_test': '/media/osero/SamsungSSD/pickles/deephand_right_frames_test.pickle',
-                'heatmap_train': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_train.pkl',
-                'heatmap_test': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_test.pkl',
-                'heatmap_3d_train': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_train.pkl',
-                'heatmap_3d_test': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_test.pkl',
+                'heatmap_train': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_full_train.pkl',
+                'heatmap_test': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_full_test.pkl',
+                'heatmap_3d_train': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_full_train.pkl',
+                'heatmap_3d_test': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_full_test.pkl',
+                'heatmap_limb_train': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_full_train.pkl',
+                'heatmap_limb_test': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_full_test.pkl',
+                'heatmap_3d_limb_train': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_full_train.pkl',
+                'heatmap_3d_limb_test': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_full_test.pkl',
                 }
 
 pose_pickle_folder = '/media/osero/SamsungSSD/CMPE_SSD/mmpose-full/'

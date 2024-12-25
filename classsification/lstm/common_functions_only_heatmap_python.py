@@ -54,7 +54,13 @@ class CustomImageHeatmapDataset(Dataset):
         )
 
         ## Keypoint heatmaps embeddings
-        keypoint_heatmaps1 = get_pseudo_heatmap(cp.deepcopy(self.heatmap_features[idx]))
+        copy_heatmap = cp.deepcopy(self.heatmap_features[idx])
+        copy_heatmap['keypoint'] = copy_heatmap['keypoint'][:,:, :KEYPOINT_NUMBER, :]
+        copy_heatmap['keypoint_score'] = copy_heatmap['keypoint_score'][:,:, :KEYPOINT_NUMBER]
+        if(any('limb' in s for s in config_file['datasets'])):
+            keypoint_heatmaps1 = get_pseudo_heatmap(copy_heatmap, flag='limb')
+        else:
+            keypoint_heatmaps1 = get_pseudo_heatmap(copy_heatmap)
         keypoint_heatmaps2 = combine_heatmaps_list(keypoint_heatmaps1)
         keypoint_heatmaps3 = [keypoint_heatmaps2[i] for i in active_frame_indices]
         keypoint_heatmaps = keypoint_heatmaps3[0::config_file['frame_frequency']]
@@ -104,10 +110,12 @@ class VideoClassifierHeatmapLSTM(nn.Module):
         super(VideoClassifierHeatmapLSTM, self).__init__()
 
         if (any('heatmap_3d' in s for s in config_file['datasets'])):
+            print('heatmap 3d')
             self.cnn = r3d_18(pretrained=True)  # Use pre-trained 3D ResNet-18
             self.cnn.stem[0] = nn.Conv3d(1, 64, kernel_size=(3, 7, 7), stride=(1, 2, 2), padding=(1, 3, 3), bias=False)
             hidden_dim = self.cnn.fc.in_features
         else:
+            print('heatmap 2d')
             self.cnn = models.resnet18(pretrained=True)
             self.cnn.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
             input_dim = self.cnn.fc.in_features
@@ -121,7 +129,7 @@ class VideoClassifierHeatmapLSTM(nn.Module):
 
     def forward(self, heatmap, lengths):
         if (any('heatmap_3d' in s for s in config_file['datasets'])):
-            input_tensor = heatmap.unsqueeze(1)  # Shape becomes [16, 58, 1, 64, 64]
+            input_tensor = heatmap.unsqueeze(1)  # Shape becomes [8, 1, 27, 64, 64]
             cnn_features = self.cnn(input_tensor)
             output = self.dropout(cnn_features)
         else:

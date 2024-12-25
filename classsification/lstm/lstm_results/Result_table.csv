@@ -145,3 +145,6 @@ DINO_features_sum,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino
 DINO_features_sum,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_small']",True,0.1,0.1,5e-05,5,0.5,0.01,1024,2,64,2,20,4,True,0.11,0.01,99.82,85.28,98.12,19,2024-12-24_11-26-47
 DINO_features_sum,['deephand_right'],False,0.1,0.1,5e-05,5,0.5,0.01,1024,2,64,2,20,4,True,1.73,0.04,67.37,45.49,63.70,14,2024-12-24_22-06-44
 DINO_features_sum,['deephand_right'],True,0.1,0.1,5e-05,5,0.5,0.01,1024,2,64,2,20,4,True,1.60,0.04,69.60,45.42,63.70,17,2024-12-24_22-16-32
+Heatmap_limb_13,['heatmap'],False,0.1,0.1,5e-05,5,0.5,0.01,1024,2,8,2,20,4,True,0.20,0.16,97.31,64.08,89.35,17,2024-12-25_15-17-25
+Heatmap_limb_13,['heatmap_3d'],False,0.1,0.1,5e-05,5,0.5,0.01,1024,2,8,2,20,4,True,0.00,0.10,100.00,79.09,95.62,19,2024-12-25_18-40-24
+Heatmap_limb_13,['heatmap_limb'],False,0.1,0.1,5e-05,5,0.5,0.01,1024,2,8,2,20,4,True,0.45,0.19,91.13,60.04,87.16,15,2024-12-25_22-05-32

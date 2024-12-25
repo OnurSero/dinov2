@@ -622,7 +622,6 @@ class GeneratePoseTarget:
             num_kp = kps.shape[1]
             for i in range(num_kp):
                 self.generate_a_heatmap(arr[i], kps[:, i], max_values[:, i])
-
         if self.with_limb:
             for i, limb in enumerate(self.skeletons):
                 start_idx, end_idx = limb
@@ -676,6 +675,7 @@ class GeneratePoseTarget:
         return ret
 
     def __call__(self, results):
+        self.skeletons  = [t for t in self.skeletons if all(x <= results['keypoint'].shape[2]-1 for x in t)]
         heatmap = self.gen_an_aug(results)
         key = 'heatmap_imgs' if 'imgs' in results else 'imgs'
 
@@ -713,15 +713,23 @@ keypoint_pipeline = [
     GeneratePoseTarget(with_kp=True, with_limb=False)
 ]
 
-def apply_transform(data):
-    for t in keypoint_pipeline:
+limb_pipeline = [
+    PoseDecode(),
+    PoseCompact(hw_ratio=1., allow_imgpad=True),
+    Resize(scale=(-1, 64)),
+    CenterCrop(crop_size=64),
+    GeneratePoseTarget(with_kp=False, with_limb=True)
+]
+
+def apply_transform(data, flag):
+    for t in keypoint_pipeline if flag == 'keypoint' else limb_pipeline:
         data = t(data)
         if data is None:
             return None
     return data 
 
-def get_pseudo_heatmap(anno):
-    pipeline = apply_transform(anno)
+def get_pseudo_heatmap(anno, flag='keypoint'):
+    pipeline = apply_transform(anno, flag)
     return pipeline['imgs']
 
 def combine_heatmaps(heatmaps):

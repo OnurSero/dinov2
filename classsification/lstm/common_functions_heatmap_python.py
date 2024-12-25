@@ -85,7 +85,13 @@ class CustomImageHeatmapDataset(Dataset):
         embeddings_tensor = torch.from_numpy(np_stacked_array)
 
         ## Keypoint heatmaps embeddings
-        keypoint_heatmaps1 = get_pseudo_heatmap(cp.deepcopy(self.heatmap_features[idx]))
+        copy_heatmap = cp.deepcopy(self.heatmap_features[idx])
+        copy_heatmap['keypoint'] = copy_heatmap['keypoint'][:,:, :KEYPOINT_NUMBER, :]
+        copy_heatmap['keypoint_score'] = copy_heatmap['keypoint_score'][:,:, :KEYPOINT_NUMBER]
+        if(any('limb' in s for s in config_file['datasets'])):
+            keypoint_heatmaps1 = get_pseudo_heatmap(copy_heatmap, flag='limb')
+        else:
+            keypoint_heatmaps1 = get_pseudo_heatmap(copy_heatmap)
         keypoint_heatmaps2 = combine_heatmaps_list(keypoint_heatmaps1)
         keypoint_heatmaps3 = [keypoint_heatmaps2[i] for i in active_frame_indices]
         keypoint_heatmaps = keypoint_heatmaps3[0::config_file['frame_frequency']]
