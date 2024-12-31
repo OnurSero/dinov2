@@ -1,6 +1,7 @@
 from common_functions_python import *
 from pyskl_lib import *
 import copy as cp
+from torchvision.models.video import r3d_18  # A ResNet-18 pre-trained for 3D inputs
 
 # Suppress the specific UserWarning
 warnings.filterwarnings("ignore", category=UserWarning, message=".*copy constructor.*")
@@ -140,13 +141,12 @@ def create_heatmap_data_loaders(datasets):
     test_loader = DataLoader(test_dataset, batch_size=config_file['batch_size'], shuffle=True, collate_fn=heatmap_collate_fn, num_workers=config_file['num_workers'])
     return train_loader, test_loader
     
-class VideoClassifierHeatmapLSTM(nn.Module):
+class VideoClassifierHeatmap2DLSTM(nn.Module):
     def __init__(self, extra_input_dim, hidden_dim, num_layers, output_dim, fc_dropout, lstm_dropout, bidirectional_lstm):
-        super(VideoClassifierHeatmapLSTM, self).__init__()
+        super(VideoClassifierHeatmap2DLSTM, self).__init__()
         self.cnn = models.resnet18(pretrained=True)
         self.cnn.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
         input_dim = self.cnn.fc.in_features + extra_input_dim
-        # self.attention = nn.MultiheadAttention(embed_dim=input_dim, num_heads=4, batch_first=True)
         self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True, dropout = lstm_dropout, bidirectional = bidirectional_lstm)
         self.fc = nn.Linear(hidden_dim, output_dim)
         self.dropout = nn.Dropout(fc_dropout)
@@ -162,22 +162,43 @@ class VideoClassifierHeatmapLSTM(nn.Module):
         features = torch.cat((cnn_features, dino_feature), dim=2)
         packed_data = pack_padded_sequence(features, lengths, batch_first=True, enforce_sorted=True)
 
-        # packed_output, _ = self.attention(query=packed_data.data.unsqueeze(0), 
-        #                                   key=packed_data.data.unsqueeze(0), 
-        #                                   value=packed_data.data.unsqueeze(0))
-        # attn_output = packed_output.squeeze(0)
-        # packed_attn_output = packed_data._replace(data=attn_output)
-        # _, (hidden, _) = self.lstm(packed_attn_output)  # Use last hidden state
-
         _, (hidden, _) = self.lstm(packed_data)  # Use last hidden state
         output = self.dropout(hidden[-1])
         output = self.fc(output)  # Take hidden state of the last LSTM layer
         return output
-       
+           
+class VideoClassifierHeatmap3DLSTM(nn.Module):
+    def __init__(self, extra_input_dim, hidden_dim, num_layers, output_dim, fc_dropout, lstm_dropout, bidirectional_lstm):
+        super(VideoClassifierHeatmap3DLSTM, self).__init__()
+        print('heatmap 3d')
+        self.cnn = r3d_18(pretrained=True)  # Use pre-trained 3D ResNet-18
+        self.cnn.stem[0] = nn.Conv3d(1, 64, kernel_size=(3, 7, 7), stride=(1, 2, 2), padding=(1, 3, 3), bias=False)
+        self.lstm = nn.LSTM(extra_input_dim, hidden_dim, num_layers, batch_first=True, dropout = lstm_dropout, bidirectional = bidirectional_lstm)
+        class_input_dim = self.cnn.fc.in_features + hidden_dim
+        self.fc = nn.Linear(class_input_dim, output_dim)
+        self.dropout = nn.Dropout(fc_dropout)
+        self.cnn.fc = nn.Identity()  # Remove final FC layer of ResNet
+
+    def forward(self, dino_feature, heatmap, lengths):
+        # Feature extraction
+        input_tensor = heatmap.unsqueeze(1)  # Shape becomes [8, 1, 27, 64, 64]
+        cnn_features = self.cnn(input_tensor)
+        packed_data = pack_padded_sequence(dino_feature, lengths, batch_first=True, enforce_sorted=True)
+        _, (hidden, _) = self.lstm(packed_data)  # Use last hidden state
+        features = torch.cat((cnn_features, hidden[-1]), dim=1)
+        output = self.dropout(features)
+        output = self.fc(output)  # Take hidden state of the last LSTM layer
+        return output
+    
 def create_heatmap_model(input_dim, output_dim):
-    model = VideoClassifierHeatmapLSTM(extra_input_dim=input_dim, hidden_dim=config_file['hidden_dim'], num_layers=config_file['num_layers'],
+    if (any('heatmap_3d' in s for s in config_file['datasets'])):
+        model = VideoClassifierHeatmap3DLSTM(extra_input_dim=input_dim, hidden_dim=config_file['hidden_dim'], num_layers=config_file['num_layers'],
                                 output_dim=output_dim, fc_dropout=config_file['mlp_dropout'], lstm_dropout=config_file['lstm_dropout'],
                                 bidirectional_lstm=config_file['bidirectional_lstm'])
+    else:
+        model = VideoClassifierHeatmap2DLSTM(extra_input_dim=input_dim, hidden_dim=config_file['hidden_dim'], num_layers=config_file['num_layers'],
+                        output_dim=output_dim, fc_dropout=config_file['mlp_dropout'], lstm_dropout=config_file['lstm_dropout'],
+                        bidirectional_lstm=config_file['bidirectional_lstm'])
     model = model.to(device)
     return model
 
