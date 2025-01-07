@@ -87,6 +87,16 @@ dataset_table = {
                 'heatmap_3d_limb_test': '/media/osero/SamsungSSD/pickles/bsign22_heatmap_format_full_test.pkl',
                 'dino_left_small_finetuned_train': '/media/osero/SamsungSSD/pickles/features_left_hand_frames_small_finetuned_train.pickle',
                 'dino_left_small_finetuned_test': '/media/osero/SamsungSSD/pickles/features_left_hand_frames_small_finetuned_test.pickle',
+                'dino_face_big_finetuned_train': '/media/osero/SamsungSSD/pickles/features_face_frames_big_finetuned_train.pickle',
+                'dino_face_big_finetuned_test': '/media/osero/SamsungSSD/pickles/features_face_frames_big_finetuned_test.pickle',
+                'dino_face_small_trained_train': '/media/osero/SamsungSSD/pickles/features_face_frames_small_trained_train.pickle',
+                'dino_face_small_trained_test': '/media/osero/SamsungSSD/pickles/features_face_frames_small_trained_test.pickle',
+                'dino_left_small_trained_train': '/media/osero/SamsungSSD/pickles/features_left_frames_small_trained_train.pickle',
+                'dino_left_small_trained_test': '/media/osero/SamsungSSD/pickles/features_left_frames_small_trained_test.pickle',
+                'dino_left_small_trained_mixed_train': '/media/osero/SamsungSSD/pickles/features_left_frames_small_trained_mixed_train.pickle',
+                'dino_left_small_trained_mixed_test': '/media/osero/SamsungSSD/pickles/features_left_frames_small_trained_mixed_test.pickle',
+                'dino_right_small_trained_mixed_train': '/media/osero/SamsungSSD/pickles/features_right_frames_small_trained_mixed_train.pickle',
+                'dino_right_small_trained_mixed_test': '/media/osero/SamsungSSD/pickles/features_right_frames_small_trained_mixed_test.pickle',
                 }
 
 pose_pickle_folder = '/media/osero/SamsungSSD/CMPE_SSD/mmpose-full/'
