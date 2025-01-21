@@ -8,70 +8,78 @@ warnings.filterwarnings("ignore", category=UserWarning, message=".*copy construc
 warnings.filterwarnings("ignore", category=UserWarning)
 
 class CustomImageHeatmapDataset(Dataset):
-    def __init__(self, pickle_file_name_list, heatmap_pickle_name):
+    def __init__(self, feature_folder_path_list, heatmap_pickle_name):
 
-        ## DINO / Deephand features
+        all_files_list = []
         paths_list = []
-        features_list = []
         labels_list = []
-        for pickle_file_name in pickle_file_name_list:
-            pickle_file = open(pickle_file_name, 'rb')
-            paths, features, labels = pickle.load(pickle_file)
-            paths_list.append(paths)
-            features_list.append(features)
-            labels_list.append(labels)
+        for feature_folder_path in feature_folder_path_list:
+            all_files = []
+            sorted_all_files = []
+            for dirpath, dirnames, filenames in os.walk(feature_folder_path):
+                for filename in filenames:
+                    file_path = os.path.join(dirpath, filename)
+                    all_files.append(file_path)
+                    # Sort files alphabetically
+            for file_path in sorted(all_files):
+                sorted_all_files.append(file_path)
+            all_files_list.append(sorted_all_files)
+
+            if (len(all_files_list) == 1):
+                for file_path in sorted_all_files:
+                    label = file_path.split("/")[-3]
+                    paths_list.append(file_path)
+                    labels_list.append(label)
+
+        self.feature_folder_path_list = feature_folder_path_list
+        self.all_files_list = all_files_list
+        self.paths = paths_list
+        self.classes = np.unique(labels_list)
+        label_dict = create_label_dict(self.classes)
+        self.labels = [label_dict[x] for x in labels_list]
 
         ## Keypoint heatmaps
         heatmap_pickle_file = open(heatmap_pickle_name, 'rb')
         annotations = pickle.load(heatmap_pickle_file)
-        annotation_labels = [x['label']+1 for x in annotations]
-        annotation_paths = [x['frame_dir'] for x in annotations]
-
-        paths_list.append(annotation_paths)
-        all_feature_list = features_list[:]
-        all_feature_list.append(annotations)
-        labels_list.append(annotation_labels)
-        check_labels(labels_list)
-        check_feature_lenghts(all_feature_list)
-
-        self.paths = paths_list[0]
-        self.classes = np.unique(labels_list[0])
-        label_dict = create_label_dict(self.classes)
-
-        self.pickle_file_name_list = pickle_file_name_list
         self.heatmap_features = annotations
-        self.features_list = features_list
-        self.labels = [label_dict[x] for x in labels_list[0]]
 
     def __len__(self):
         return len(self.labels)
     
     def __getitem__(self, idx):
         splited_paths = self.paths[idx].split('/')
-        label_name = splited_paths[-2]
-        sample_name = splited_paths[-1]
+        label_name = splited_paths[-3]
+        sample_name = splited_paths[-2]
         dot_index = sample_name.find('.')
 
         if dot_index != -1:  # Check if there's a dot in the string, then remove it
             sample_name = sample_name[:dot_index]
 
+        features_list = []
+        for all_files in self.all_files_list:
+            pickle_file_name = all_files[idx]
+            pickle_file = open(pickle_file_name, 'rb')
+            features = pickle.load(pickle_file)
+            features_list.append(features)
+        check_feature_lenghts(features_list)
+
         active_frame_indices = get_active_frames(label_name, sample_name)
         active_frame_indices = (
             active_frame_indices
             if active_frame_indices.size > 10
-            else np.arange(0, len(self.features_list[0][idx]))
+            else np.arange(0, len(features_list[0]))
         )
 
         embeddings_list = []
         if (config_file['concatenate']):
             ## Dino Deephand embeddings
-            for features in self.features_list:
-                embeddings = [features[idx][i] for i in active_frame_indices]
+            for features in features_list:
+                embeddings = [features[i] for i in active_frame_indices]
                 embeddings = embeddings[0::config_file['frame_frequency']]
                 embeddings_list.append(embeddings)
         else:
-            for features in self.features_list:
-                embeddings = [features[idx][i] for i in active_frame_indices]
+            for features in features_list:
+                embeddings = [features[i] for i in active_frame_indices]
                 embeddings = embeddings[0::config_file['frame_frequency']]
                 # Find the first person with age 25
                 same_len_embeddings = next((embeddings_element for embeddings_element in embeddings_list if len(embeddings_element[0]) == len(embeddings[0])), None)
@@ -135,8 +143,8 @@ def create_heatmap_data_loaders(datasets):
     heatmap_train_file_name = dataset_table[heatmap_dataset_list[0] + '_train']
     heatmap_test_file_name =  dataset_table[heatmap_dataset_list[0] + '_test']
 
-    train_dataset = CustomImageHeatmapDataset(pickle_file_name_list = train_file_names, heatmap_pickle_name = heatmap_train_file_name)
-    test_dataset = CustomImageHeatmapDataset(pickle_file_name_list = test_file_names,  heatmap_pickle_name = heatmap_test_file_name)
+    train_dataset = CustomImageHeatmapDataset(feature_folder_path_list = train_file_names, heatmap_pickle_name = heatmap_train_file_name)
+    test_dataset = CustomImageHeatmapDataset(feature_folder_path_list = test_file_names,  heatmap_pickle_name = heatmap_test_file_name)
     train_loader = DataLoader(train_dataset, batch_size=config_file['batch_size'], shuffle=True, collate_fn=heatmap_collate_fn, num_workers=config_file['num_workers']) # Adjust batch size as needed
     test_loader = DataLoader(test_dataset, batch_size=config_file['batch_size'], shuffle=True, collate_fn=heatmap_collate_fn, num_workers=config_file['num_workers'])
     return train_loader, test_loader
@@ -259,8 +267,8 @@ def train_loop_heatmap():
     print("cnn_dim: ", cnn_dim)
     print("train_dataset size: ", len(train_loader.dataset))
     print("test_dataset size: ", len(test_loader.dataset))
-    print('train_loader pickle_file_name_list: ', train_loader.dataset.pickle_file_name_list)
-    print('test_loader pickle_file_name_list: ', test_loader.dataset.pickle_file_name_list)
+    print('train_loader feature_folder_path_list: ', train_loader.dataset.feature_folder_path_list)
+    print('test_loader feature_folder_path_list: ', test_loader.dataset.feature_folder_path_list)
     model = create_heatmap_model(input_dim, num_classes)
 
     criterion, optimizer, scheduler = create_train_dependencies(model)
