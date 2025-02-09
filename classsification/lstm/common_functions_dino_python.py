@@ -126,6 +126,10 @@ class VideoDINOClassifierLSTM(nn.Module):
         self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True, dropout = lstm_dropout, bidirectional = bidirectional_lstm)
         self.fc = nn.Linear(hidden_dim, output_dim)
         self.dropout = nn.Dropout(fc_dropout)
+        self.bn1 = nn.BatchNorm1d(512)
+        self.bn2 = nn.BatchNorm2d(512)
+        self.layer_norm = nn.LayerNorm(512)
+
 
     def forward(self, x):
         # ## Attention
@@ -136,7 +140,10 @@ class VideoDINOClassifierLSTM(nn.Module):
         # packed_attn_output = x._replace(data=attn_output)
 
         # _, (hidden, _) = self.lstm(packed_attn_output)  # Use last hidden state
-
+        # dddddddd = 5
+        # aaa = self.bn1(x[0])
+        # bbb = self.bn2(x)
+        # cccc = self.layer_norm(x)
         _, (hidden, _) = self.lstm(x)  # Use last hidden state
         output = self.dropout(hidden[-1])
         output = self.fc(output)  # Take hidden state of the last LSTM layer

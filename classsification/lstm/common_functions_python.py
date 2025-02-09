@@ -104,6 +104,18 @@ dataset_table = {
                 'dino_right_large_trained_mixed_test': '/media/osero/SamsungSSD/features/features_right_frames_large_trained_mixed_test',
                 'dino_face_large_trained_mixed_train': '/media/osero/SamsungSSD/features/features_face_frames_large_trained_mixed_train',
                 'dino_face_large_trained_mixed_test': '/media/osero/SamsungSSD/features/features_face_frames_large_trained_mixed_test',
+                'dan_train': '/media/osero/SamsungSSD/features/dan_frames_train',
+                'dan_test': '/media/osero/SamsungSSD/features/dan_frames_test',
+                'dino_left_small_layer8_train': '/media/osero/SamsungSSD/features/features_left_hand_small_layer8_train',
+                'dino_left_small_layer8_test': '/media/osero/SamsungSSD/features/features_left_hand_small_layer8_test',
+                'dino_left_small_layer9_train': '/media/osero/SamsungSSD/features/features_left_hand_small_layer9_train',
+                'dino_left_small_layer9_test': '/media/osero/SamsungSSD/features/features_left_hand_small_layer9_test',
+                'dino_left_small_layer10_train': '/media/osero/SamsungSSD/features/features_left_hand_small_layer10_train',
+                'dino_left_small_layer10_test': '/media/osero/SamsungSSD/features/features_left_hand_small_layer10_test',
+                'dino_left_small_layer11_train': '/media/osero/SamsungSSD/features/features_left_hand_small_layer11_train',
+                'dino_left_small_layer11_test': '/media/osero/SamsungSSD/features/features_left_hand_small_layer11_test',
+                'dino_left_small_layer9_noreg_train': '/media/osero/SamsungSSD/features/features_left_hand_small_layer9_noreg_train',
+                'dino_left_small_layer9_noreg_test': '/media/osero/SamsungSSD/features/features_left_hand_small_layer9_noreg_test',
                 }
 
 pose_pickle_folder = '/media/osero/SamsungSSD/CMPE_SSD/mmpose-full/'
