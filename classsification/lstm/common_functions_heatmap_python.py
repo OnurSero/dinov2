@@ -60,6 +60,8 @@ class CustomImageHeatmapDataset(Dataset):
             pickle_file_name = all_files[idx]
             pickle_file = open(pickle_file_name, 'rb')
             features = pickle.load(pickle_file)
+            if('dan_frames' in pickle_file_name):
+                features = nn.BatchNorm1d(len(features[0]))(torch.tensor(features)).detach().numpy()
             features_list.append(features)
         check_feature_lenghts(features_list)
 

@@ -59,6 +59,8 @@ class CustomImageDinoDataset(Dataset):
             pickle_file_name = all_files[idx]
             pickle_file = open(pickle_file_name, 'rb')
             features = pickle.load(pickle_file)
+            if('dan_frames' in pickle_file_name):
+                features = nn.BatchNorm1d(len(features[0]))(torch.tensor(features)).detach().numpy()
             features_list.append(features)
         check_feature_lenghts(features_list)
 
@@ -144,6 +146,7 @@ class VideoDINOClassifierLSTM(nn.Module):
         # aaa = self.bn1(x[0])
         # bbb = self.bn2(x)
         # cccc = self.layer_norm(x)
+        # x[0] = self.bn1(x[0])
         _, (hidden, _) = self.lstm(x)  # Use last hidden state
         output = self.dropout(hidden[-1])
         output = self.fc(output)  # Take hidden state of the last LSTM layer
@@ -168,6 +171,8 @@ def test_model_dino(test_loader, model, criterion):
     test_predicted_top_5 = []
     with torch.no_grad():
         for features, lengths, labels in test_loader:
+            # batch_norm = nn.BatchNorm1d(features.size(1))  # Apply along the feature dimension
+            # features = batch_norm(features)            # Apply batch norm before packing
             packed_input = pack_padded_sequence(features, lengths, batch_first=True, enforce_sorted=True)
             features = packed_input.to(device)
             lengths = lengths.to(device)

@@ -185,7 +185,15 @@ Intermediate_Layer,['dino_left_small_layer8'],False,0.1,0.1,0.00005,5,0.5,0.01,1
 Intermediate_Layer,['dino_left_small_layer10'],False,0.1,0.1,0.00005,5,0.5,0.01,1024,2,64,2,20,4,True,1.08,0.03,84.26,54.69,83.27,18,2025-02-03_22-22-09
 Intermediate_Layer,['dino_left_small_layer11'],False,0.1,0.1,0.00005,5,0.5,0.01,1024,2,64,2,20,4,True,0.35,0.02,97.47,76.15,94.69,19,2025-02-04_05-58-53
 Intermediate_Layer,['dino_left_small_layer9_noreg'],False,0.1,0.1,0.00005,5,0.5,0.01,1024,2,64,2,20,4,True,1.55,0.03,72.15,49.31,80.79,19,2025-02-04_06-06-00
-Intermediate_Layer,['dino_face_small'],False,0.1,0.1,5e-05,5,0.5,0.01,1024,2,64,2,20,4,True,1.68,0.06,72.67,22.08,43.79,19,2025-02-06_23-23-31
-Intermediate_Layer,['dan'],False,0.1,0.1,5e-05,5,0.5,0.01,1024,2,64,2,20,4,True,3.02,0.08,41.41,7.43,20.95,19,2025-02-06_23-27-55
-Intermediate_Layer,['dan'],False,0.1,0.1,0.0005,5,0.5,0.01,1024,2,64,2,20,4,True,4.19,0.10,12.22,3.27,10.54,19,2025-02-06_23-38-02
-Intermediate_Layer,['dan'],False,0.1,0.1,0.0002,5,0.5,0.01,1024,2,64,2,20,4,True,3.21,0.08,28.24,7.27,20.49,14,2025-02-06_23-43-47
+Intermediate_Layer,['dino_face_small'],False,0.1,0.1,0.00005,5,0.5,0.01,1024,2,64,2,20,4,True,1.68,0.06,72.67,22.08,43.79,19,2025-02-06_23-23-31
+Intermediate_Layer,"['dino_left_small', 'dino_face_small']",False,0.1,0.1,0.0002,5,0.5,0.01,1024,2,64,2,20,4,True,0.06,0.02,99.76,72.94,93.94,16,2025-02-09_14-40-56
+Intermediate_Layer,['dino_left_small'],False,0.1,0.1,0.0002,5,0.5,0.01,1024,2,64,2,20,4,True,0.04,0.01,99.71,77.3,95.69,16,2025-02-09_14-45-12
+Intermediate_Layer,"['dino_left_small', 'dan']",False,0.1,0.1,0.0002,5,0.5,0.01,1024,2,64,2,20,4,True,0.01,0.01,100,77.81,94.92,17,2025-02-09_15-06-25
+Intermediate_Layer,"['deephand_left', 'dino_left_large', 'dino_right_large', 'dan']",False,0.1,0.1,0.00005,5,0.5,0.01,1024,2,64,2,20,4,True,0.08,0.01,99.94,88.04,98.89,18,2025-02-09_16-02-39
+Intermediate_Layer,"['deephand_left', 'dino_left_large', 'dino_right_large', 'dino_face_small']",False,0.1,0.1,0.00005,5,0.5,0.01,1024,2,64,2,20,4,True,0.13,0.01,99.56,86.74,98.67,18,2025-02-09_16-12-14
+Intermediate_Layer,"['deephand_left', 'dino_left_large', 'dino_right_large']",False,0.1,0.1,0.00005,5,0.5,0.01,1024,2,64,2,20,4,True,0.1,0.01,99.74,86.94,98.7,18,2025-02-09_16-20-12
+Intermediate_Layer,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_large', 'dan', 'heatmap_3d']",False,0.1,0.1,5e-05,5,0.5,0.01,1024,2,8,2,20,4,True,0.00,0.04,99.99,91.51,99.43,18,2025-02-10_04-05-32
+Intermediate_Layer,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_large', 'dan', 'heatmap']",False,0.1,0.1,5e-05,5,0.5,0.01,1024,2,8,2,20,4,True,0.01,0.06,99.98,87.20,98.45,16,2025-02-10_05-27-36
+Intermediate_Layer,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_large', 'heatmap_3d']",False,0.1,0.1,5e-05,5,0.5,0.01,1024,2,8,2,20,4,True,0.00,0.04,100.00,90.85,99.01,16,2025-02-10_09-14-04
+Intermediate_Layer,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_large', 'dino_face_small', 'heatmap_3d']",False,0.1,0.1,5e-05,5,0.5,0.01,1024,2,8,2,20,4,True,0.00,0.04,100.00,90.72,98.98,18,2025-02-10_13-02-14
+Intermediate_Layer,"['deephand_left', 'dino_left_large', 'dino_face_small', 'dino_right_large', 'dan', 'heatmap_3d']",True,0.1,0.1,5e-05,5,0.5,0.01,1024,2,4,2,20,4,True,0.00,0.08,100.00,91.11,98.89,17,2025-02-11_05-29-39
