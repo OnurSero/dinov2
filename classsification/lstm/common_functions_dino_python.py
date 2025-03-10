@@ -64,13 +64,13 @@ class CustomImageDinoDataset(Dataset):
             features_list.append(features)
         check_feature_lenghts(features_list)
 
-        active_frame_indices = get_active_frames(label_name, sample_name)
-        active_frame_indices = (
-            active_frame_indices
-            if active_frame_indices.size > 10
-            else np.arange(0, len(features_list[0]))
-        )
-
+        # active_frame_indices = get_active_frames(label_name, sample_name)
+        # active_frame_indices = (
+        #     active_frame_indices
+        #     if active_frame_indices.size > 10
+        #     else np.arange(0, len(features_list[0]))
+        # )
+        active_frame_indices = np.arange(0, len(features_list[0]))
         embeddings_list = []
         
         if (config_file['concatenate']):
